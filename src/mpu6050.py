@@ -45,19 +45,23 @@ def getAngle():
     count = 10
     x = 0
     y = 0
-    for i in range(0,count):
-        gyro_xout = read_word_2c(0x43)
-        gyro_yout = read_word_2c(0x45)
-        gyro_zout = read_word_2c(0x47)
-        
-        accel_xout = read_word_2c(0x3b)
-        accel_yout = read_word_2c(0x3d)
-        accel_zout = read_word_2c(0x3f)
-        
-        accel_xout_scaled = accel_xout / 16384.0
-        accel_yout_scaled = accel_yout / 16384.0
-        accel_zout_scaled = accel_zout / 16384.0
-        
-        x = x + get_x_rotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled)/count
-        y = y + get_y_rotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled)/count
+    try:
+        for i in range(0,count):
+            gyro_xout = read_word_2c(0x43)
+            gyro_yout = read_word_2c(0x45)
+            gyro_zout = read_word_2c(0x47)
+            
+            accel_xout = read_word_2c(0x3b)
+            accel_yout = read_word_2c(0x3d)
+            accel_zout = read_word_2c(0x3f)
+            
+            accel_xout_scaled = accel_xout / 16384.0
+            accel_yout_scaled = accel_yout / 16384.0
+            accel_zout_scaled = accel_zout / 16384.0
+            
+            x = x + get_x_rotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled)/count
+            y = y + get_y_rotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled)/count
+    except:
+        # Now wake the 6050 up as it starts in sleep mode
+        bus.write_byte_data(address, power_mgmt_1, 0)
     return [y, x]
