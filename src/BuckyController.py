@@ -6,7 +6,7 @@ kT = [0.0225, 0.0225, 0.0225]
 kE = [0.0198, 0.0198, 0.0198]
 resistance = [0.8, 0.8, 0.8]
 torque = [0, 0, 0]
-xRef = [0, 0, 0]
+xRef = [-0.23, 0, 0]
 xError = [0, 0, 0]
 motorVoltage = [0, 0, 0]
 
@@ -45,6 +45,6 @@ def getDirPWM(uInput):
 		dirOutput[i] = sign(uInput[i])
 
 	for i in range(0,3):
-		PWMOutput[i] = int(translate(abs(uInput[i]),minVoltage,maxVoltage,0,255))
+		PWMOutput[i] = int(translate(abs(uInput[i]),minVoltage,maxVoltage,0,254))
 
 	return dirOutput, PWMOutput
