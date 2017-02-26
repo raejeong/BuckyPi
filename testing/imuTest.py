@@ -40,8 +40,9 @@ address = 0x68       # This is the address value read via the i2cdetect command
 
 # Now wake the 6050 up as it starts in sleep mode
 bus.write_byte_data(address, power_mgmt_1, 0)
-
-def getAngle():
+while True:
+    x = 0;
+    y = 0;
     count = 10
     for i in range(0,count):
         gyro_xout = read_word_2c(0x43)
@@ -58,4 +59,8 @@ def getAngle():
         
         x = x + get_x_rotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled)/count
         y = y + get_y_rotation(accel_xout_scaled, accel_yout_scaled, accel_zout_scaled)/count
-    return [x, y]
+    
+    print "x rotation: " , x
+    print "y rotation: " , y
+    print " "
+    time.sleep(0.5)
