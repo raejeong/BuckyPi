@@ -18,6 +18,8 @@ while  True:
 	state = SerialUpdate.update(direction,motorPWM) + mpu6050.getAngle()
 	print state
 	print u
+	print direction
+	print motorPWM
 	u = BuckyController.controls(state, tPeriod)
 	direction, motorPWM = BuckyController.getDirPWM(u)
 	
